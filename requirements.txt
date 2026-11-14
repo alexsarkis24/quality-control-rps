@@ -1,4 +1,7 @@
 # runtime
+pandas
+python-dotenv
+plotly
 
 # testing
 pytest
