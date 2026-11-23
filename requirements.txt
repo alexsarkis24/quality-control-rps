@@ -2,6 +2,10 @@
 pandas
 python-dotenv
 plotly
+flask
+
+# production server
+gunicorn
 
 # testing
 pytest

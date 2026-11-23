@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% set active_page = "home" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Welcome</h1>
+    <p class="lead">Play rock, paper, scissors or look up a stock.</p>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title"><i class="bi bi-scissors"></i> Rock Paper Scissors</h5>
+                <p class="card-text">Pick a move and play against the computer.</p>
+                <a href="/rps/form" class="btn btn-primary">Play</a>
+            </div></div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title"><i class="bi bi-bar-chart-line"></i> Stocks Dashboard</h5>
+                <p class="card-text">See recent daily prices for any stock symbol.</p>
+                <a href="/stocks/form" class="btn btn-success">Look up a stock</a>
+            </div></div>
+        </div>
+    </div>
+{% endblock %}

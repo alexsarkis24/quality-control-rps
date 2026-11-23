@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% set active_page = "rps" %}
+{% block title %}RPS Results{% endblock %}
+{% block content %}
+    <h1>Game Result</h1>
+    <ul class="list-group mb-3" style="max-width: 24rem;">
+        <li class="list-group-item"><b>You:</b> {{ user_choice.upper() }}</li>
+        <li class="list-group-item"><b>Computer:</b> {{ computer_choice.upper() }}</li>
+        <li class="list-group-item"><b>Outcome:</b> {{ outcome }}</li>
+    </ul>
+    <a href="/rps/form" class="btn btn-outline-primary">Play again</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% set active_page = "stocks" %}
+{% block title %}{{ symbol }} Dashboard{% endblock %}
+{% block content %}
+    <h1>Stocks Dashboard ({{ symbol }})</h1>
+    <p class="lead">Latest close: {{ latest_close_usd }} (as of {{ latest_date }})</p>
+
+    <div id="chart" style="height: 450px;"></div>
+
+    <h2 class="h4 mt-4">Recent daily prices</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr></thead>
+            <tbody>
+            {% for row in data[:20] %}
+                <tr>
+                    <td>{{ row.timestamp }}</td>
+                    <td>{{ "%.2f"|format(row.open) }}</td>
+                    <td>{{ "%.2f"|format(row.high) }}</td>
+                    <td>{{ "%.2f"|format(row.low) }}</td>
+                    <td>{{ "%.2f"|format(row.close) }}</td>
+                    <td>{{ "{:,}".format(row.volume|int) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script>
+        const stockData = {{ data | tojson }};
+        Plotly.newPlot("chart", [{
+            x: stockData.map(r => r.timestamp),
+            y: stockData.map(r => r.close),
+            mode: "lines",
+            line: {color: "#0d4f5c"}
+        }], {
+            title: "Daily closing prices: {{ symbol }}",
+            yaxis: {tickprefix: "$"},
+            margin: {t: 50}
+        }, {responsive: true});
+    </script>
+{% endblock %}
