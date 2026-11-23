@@ -4,7 +4,7 @@
 
 A Python app with a command-line game, a stocks dashboard, and a Flask web app, with automated tests and continuous integration (GitHub Actions).
 
-**Live site:** _deployment link added after first deploy_
+**Live site:** <https://quality-control-rps-zjk1.onrender.com/> (free instance, the first load after idle can take ~50 seconds)
 
 - `app/rps.py`: rock, paper, scissors game (reusable, tested functions)
 - `app/stocks.py`: stocks dashboard using the AlphaVantage API
