@@ -27,7 +27,7 @@ def build_request_url(symbol, api_key):
     """Builds the AlphaVantage request URL for a symbol."""
     return (
         "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
-        f"&symbol={symbol}&apikey={api_key}&datatype=csv&outputsize=full"
+        f"&symbol={symbol}&apikey={api_key}&datatype=csv&outputsize=compact"
     )
 
 

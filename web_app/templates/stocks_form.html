@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% set active_page = "stocks" %}
+{% block title %}Stocks{% endblock %}
+{% block content %}
+    <h1>Stocks Lookup</h1>
+    <form action="/stocks/dashboard" method="POST" class="mt-3" style="max-width: 24rem;">
+        <label for="symbol" class="form-label">Stock symbol:</label>
+        <input id="symbol" name="symbol" type="text" class="form-control mb-3" placeholder="{{ default_symbol }}" value="{{ default_symbol }}" required>
+        <button type="submit" class="btn btn-success">Get data</button>
+    </form>
+{% endblock %}
