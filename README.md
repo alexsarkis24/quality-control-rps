@@ -1,11 +1,14 @@
-# Quality Control: Rock Paper Scissors + Stocks Dashboard
+# Rock Paper Scissors + Stocks Dashboard (CLI and Web App)
 
 ![Tests](https://github.com/alexsarkis24/quality-control-rps/actions/workflows/pytest.yml/badge.svg)
 
-A small Python app with automated tests and continuous integration (GitHub Actions).
+A Python app with a command-line game, a stocks dashboard, and a Flask web app, with automated tests and continuous integration (GitHub Actions).
+
+**Live site:** _deployment link added after first deploy_
 
 - `app/rps.py`: rock, paper, scissors game (reusable, tested functions)
 - `app/stocks.py`: stocks dashboard using the AlphaVantage API
+- `web_app/`: Flask web app (home, RPS and stocks routes, Bootstrap layout, flash messages)
 - `test/`: pytest tests that import and invoke the app code
 - `.github/workflows/pytest.yml`: CI that runs the tests on every push and pull request
 
@@ -44,6 +47,7 @@ Get an AlphaVantage API key (from the course page, or <https://www.alphavantage.
 cp .env.example .env
 # then edit .env:
 ALPHAVANTAGE_API_KEY="your-key-here"
+SECRET_KEY="any-long-random-string"   # used by the web app to sign flash messages
 ```
 
 ## Usage
@@ -60,17 +64,48 @@ Run the stocks dashboard (prompts for a symbol, default NFLX, and opens a chart)
 python -m app.stocks
 ```
 
+### Web App
+
+Run the web app locally, then open <http://localhost:5000/>:
+
+```sh
+FLASK_APP=web_app flask run
+```
+
+Pages:
+
+- `/`, `/about`, `/hello?name=You`: home routes
+- `/rps/form` → `/rps/results`: pick a move from a dropdown and see the result
+- `/stocks/form` → `/stocks/dashboard`: enter a symbol to see a price table and chart (also works as `/stocks/dashboard?symbol=MSFT`)
+
+Invalid RPS choices or stock symbols show a flash message and redirect back to the form.
+
 ## Testing
 
 ```sh
 pytest
 ```
 
-The stocks tests mock the network call, so they run offline and need no API key. That keeps CI secure and deterministic.
+The stocks and web app tests mock the network call, so they run offline and need no API key. That keeps CI secure and deterministic.
 
 ## Continuous Integration
 
 GitHub Actions (`.github/workflows/pytest.yml`) installs `requirements.txt` and runs `pytest` on every push to `main` and on every pull request. No secrets are required.
+
+## Deployment (Render)
+
+The app runs in production with gunicorn:
+
+```sh
+gunicorn "web_app:create_app()"
+```
+
+To deploy on [Render](https://render.com/):
+
+1. New → Web Service → connect this GitHub repository.
+2. Build command: `pip install -r requirements.txt`
+3. Start command: `gunicorn "web_app:create_app()"`
+4. Environment variables: `ALPHAVANTAGE_API_KEY` (your key) and `SECRET_KEY` (a long random string). Set these in Render's dashboard, never in the repo.
 
 ## Contributing workflow
 
